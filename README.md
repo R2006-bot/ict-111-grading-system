@@ -1,129 +1,70 @@
-students = []
+# ICT 111 Student Grading System
 
-while True:
-    print("\nSTUDENT GRADING SYSTEM")
-    print("1. Add student")
-    print("2. Display all")
-    print("3. Class summary")
-    print("4. Exit")
+A simple, menu-driven Python command-line application for registering students, assigning grades from marks, displaying student records, and reviewing class statistics.
 
-    option = input("Choose 1-4: ")
+## Features
 
-    if option == "1":
-        print("\nADD STUDENT")
-        
-        student_number = input("Enter student number: ")
-        
-        while student_number.strip() == "":
-            print("Student number cannot be blank.")
-            student_number = input("Enter student number: ")
+- Add a student using a student number, name, and mark.
+- Reject blank student numbers and names.
+- Validate that marks are numeric and between 0 and 100.
+- Assign a grade and performance decision automatically.
+- Display all students registered during the current run.
+- Calculate the class average, highest and lowest marks, and pass/fail counts.
 
-        name = input("Enter student name: ")
+## Grade scale
 
-        while name.strip() == "":
-            print("Student name cannot be blank.")
-            name = input("Enter student name: ")
+| Mark range | Grade | Decision |
+| --- | --- | --- |
+| 75–100 | A | Excellent |
+| 65–less than 75 | B | Very good |
+| 50–less than 65 | C | Good |
+| 45–less than 50 | D | Pass |
+| 0–less than 45 | F | Fail |
 
-        while True:
-            try:
-                mark = float(input("Enter student mark: "))
+The class summary counts marks of **50 or higher** as passes and marks below 50 as fails. Consequently, a mark from 45 to less than 50 receives a D / “Pass” grade but is counted as a fail in the summary.
 
-                if mark < 0 or mark > 100:
-                    print("Mark must be between 0 and 100.")
+## Requirements
 
-                else:
-                    break
+- Python 3
+- A terminal or command prompt
 
-            except ValueError:
-                print("Invalid input. Enter a numeric mark.")
+The application uses only Python's standard library; no packages need to be installed.
 
-        if mark >= 75:
-            grade = "A"
-            decision = "Excellent"
+## Getting started
 
-        elif mark >= 65:
-            grade = "B"
-            decision = "Very good"
+1. Clone or download this repository.
+2. Open a terminal in the project directory.
+3. Run:
 
-        elif mark >= 50:
-            grade = "C"
-            decision = "Good"
+   ```bash
+   python3 "grading system.py"
+   ```
 
-        elif mark >= 45:
-            grade = "D"
-            decision = "Pass"
+   On Windows, you can use:
 
-        else:
-            grade = "F"
-            decision = "Fail"
+   ```powershell
+   py "grading system.py"
+   ```
 
-        student = {
-            "student_number": student_number,
-            "name": name,
-            "mark": mark,
-            "grade": grade,
-            "decision": decision
-        }
+## Using the application
 
-        students.append(student)
+Choose an option from the menu:
 
-        print("\nStudent added successfully!")
-        print("Grade:", grade)
-        print("Decision:", decision)
-    elif option == "2":
-        print("\nDISPLAY ALL STUDENTS")
+1. **Add student** — enter a non-blank student number and name, then a mark from 0 to 100.
+2. **Display all** — print every student registered in this run.
+3. **Class summary** — show class statistics. This option displays a message if no students have been added.
+4. **Exit** — close the application.
 
-        if len(students) == 0:
-            print("No students have been registered yet.")
+Invalid menu choices and invalid marks prompt for valid input.
 
-        else:
-            for student in students:
-                print("----------------------------")
-                print("Student Number:", student["student_number"])
-                print("Name:", student["name"])
-                print("Mark:", student["mark"])
-                print("Grade:", student["grade"])
-                print("Decision:", student["decision"])
-    elif option == "3":
-        print("\nCLASS SUMMARY")
+## Data and limitations
 
-        if len(students) == 0:
-            print("No students available to calculate statistics.")
+Student records are stored in memory and are cleared when the program exits. The application does not currently save records to a file or database, prevent duplicate student numbers, or provide student record editing and deletion.
 
-        else:
-            total_students = len(students)
-            total_marks = 0
-            highest = students[0]["mark"]
-            lowest = students[0]["mark"]
-            passes = 0
-            fails = 0
+## Project structure
 
-            for student in students:
-                mark = student["mark"]
-
-                total_marks += mark
-
-                if mark > highest:
-                    highest = mark
-
-                if mark < lowest:
-                    lowest = mark
-
-                if mark >= 50:
-                    passes += 1
-                else:
-                    fails += 1
-
-            average = total_marks / total_students
-
-            print("Total students:", total_students)
-            print("Class average:", round(average, 2))
-            print("Highest mark:", highest)
-            print("Lowest mark:", lowest)
-            print("Number of passes:", passes)
-            print("Number of fails:", fails)
-    elif option == "4":
-        print("Thank you for using the system!")
-        break
-    else:
-        print("invalid option. please choose 1-4.")
+```text
+.
+├── grading system.py
+└── README.md
+```
